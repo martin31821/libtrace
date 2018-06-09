@@ -63,3 +63,15 @@ void trace_call_exit(trace_t *trace, size_t invocation, const value_t *retval) {
   }
   fflush(trace->trace_file);
 }
+
+void trace_ext_ptr(trace_t *trace, const void* ptr, size_t ptrsize, uint8_t data_is_ptr) {
+  if (!trace) return;
+  const char *start = "PNTR";
+  fwrite(start, 4, 1, trace->trace_file);
+  fwrite(&ptr, sizeof(const void**), 1, trace->trace_file);
+  if (!ptr) return;
+  fwrite(&data_is_ptr, sizeof(uint8_t), 1, trace->trace_file);
+  fwrite(&ptrsize, sizeof(size_t), 1, trace->trace_file);
+  fwrite(ptr, 1, ptrsize, trace->trace_file);
+  fflush(trace->trace_file);
+}

@@ -24,7 +24,7 @@ LIB_SRCS = $(wildcard src/*.c) $(wildcard src/*/*.c) $(wildcard src/*/*/*.c)
 LIB_OBJS = $(addprefix $(BUILD_FOLDER),$(LIB_SRCS:%.c=%.o))
 LIB_DEPS = $(addprefix $(BUILD_FOLDER),$(LIB_SRCS:%.c=%.dep))
 
-LIB = $(addprefix $(BUILD_FOLDER),$(LIBRARY))
+LIB = $(addprefix $(BUILD_FOLDER)lib,$(LIBRARY))
 STATIC_LIB = $(LIB).a
 #TODO: Add windows build
 DYNAMIC_LIB = $(LIB).so

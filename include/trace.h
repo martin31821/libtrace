@@ -8,7 +8,7 @@ typedef struct _trace_t trace_t;
 
 typedef struct {
   size_t size;
-  void* data;
+  const void* data;
 } value_t;
 
 typedef struct {
@@ -36,3 +36,12 @@ size_t trace_call_entry(trace_t *trace, const invocation_t *invocation);
 // giving the value trace_call_entry gave you and the return va lue.
 // If your function is void, the return value must be NULL
 void trace_call_exit(trace_t *trace, size_t invocation, const value_t *return_val);
+
+// Mark the given pointer as "external", which means that it will be created
+// and the data will be available
+// ptr - contains the pointer seen in the original run
+// ptrsize - length of the data ptr points to
+// data_is_ptr - whether the pointer target is another pointer (i.e. whether it will be added to the pointer-tracker)
+// this method will read ptrsize bytes from ptr.
+// if ptr is NULL, nothing will be read.
+void trace_ext_ptr(trace_t *trace, const void* ptr, size_t ptrsize, uint8_t data_is_ptr);
